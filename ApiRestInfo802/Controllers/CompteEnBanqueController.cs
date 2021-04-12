@@ -26,15 +26,29 @@ namespace ApiRestInfo802.Controllers
         }
         [HttpGet]
         [Route("query")]
-        public CompteEnBanque GetCompte([FromQuery] string numero)
+        public IActionResult GetCompte([FromQuery] string numero, [FromQuery] string action)
         {
-            CompteEnBanque res = null;
+            CompteEnBanque compte = null;
             foreach (CompteEnBanque c in labanque)
             {
                 if (c.NumeroCompte == numero)
-                    res = c;
+                    compte = c;
             }
-            return res;
+            IActionResult response = BadRequest();
+
+            if (action == "verify")
+            {
+                if (compte != null)
+                    response = Ok(true);
+                else
+                    response = BadRequest(false);
+            }
+            if(action == "get")
+            {
+                if (compte != null)
+                    response = Ok(compte);
+            }
+            return response;
         }
 
         // GET api/<CompteEnBanqueController>/5
