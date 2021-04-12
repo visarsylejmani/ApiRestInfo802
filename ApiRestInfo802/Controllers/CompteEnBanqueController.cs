@@ -41,7 +41,7 @@ namespace ApiRestInfo802.Controllers
                 if (compte != null)
                     response = Ok(true);
                 else
-                    response = BadRequest(false);
+                    response = Ok(false);
             }
             if(action == "get")
             {
