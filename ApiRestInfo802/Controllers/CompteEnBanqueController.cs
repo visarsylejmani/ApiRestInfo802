@@ -26,7 +26,7 @@ namespace ApiRestInfo802.Controllers
         }
         [HttpGet]
         [Route("query")]
-        public IActionResult GetCompte([FromQuery] string numero, [FromQuery] string action)
+        public IActionResult GetCompte([FromQuery] string numero)
         {
             CompteEnBanque compte = null;
             foreach (CompteEnBanque c in labanque)
@@ -36,18 +36,8 @@ namespace ApiRestInfo802.Controllers
             }
             IActionResult response = BadRequest();
 
-            if (action == "verify")
-            {
-                if (compte != null)
-                    response = Ok(true);
-                else
-                    response = Ok(false);
-            }
-            if(action == "get")
-            {
-                if (compte != null)
-                    response = Ok(compte);
-            }
+            if (compte != null)
+                response = Ok(compte);
             return response;
         }
 
